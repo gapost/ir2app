@@ -1,8 +1,10 @@
 loopPeriod = 333; // ms
 irradiation = false;
-measDelay = 3;
+measDelay = 3; // at 1s
 
-//exec("scripts/include.js")
+exec("include.qs")
+
+//exec("pressureIndicator.qs");
 
 
 print("Creating Main Aqcuisition Loop ...")
@@ -60,3 +62,7 @@ with(dev) {
 }
 
 restoreWindowState("windowState.dat")
+
+
+
+createPressureIndicator(jobs.t,jobs.buff);
