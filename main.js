@@ -110,12 +110,8 @@ showRateChannels(1)
 restoreWindowState("windowState.dat");
 
 
-//startMainLoop(true);
-startCryo(true);
-wait(1000)
-startDelta(0.02);
-wait(5000)
-startSampleCtrl(true)
+startMainLoop(true);
+
 
 
 with (jobs) {
@@ -130,7 +126,7 @@ with (jobs) {
 	}
 }
 
-print("Press Main Loop button to start ...")
+
 
 
 

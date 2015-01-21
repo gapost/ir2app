@@ -208,6 +208,8 @@ function startDelta(srcCurrent)
 	with(dev)
 	{
 		if (tcs1.autoMode || tcs2.autoMode) return; 
+
+        jobs.t.deltaLoop.disarm();
 		nvm.disarm();
 		src.disarm();
 		
@@ -239,6 +241,7 @@ function startDelta(srcCurrent)
 		src.arm();
 		wait(1000);
 		nvm.arm();
+        jobs.t.deltaLoop.arm();
 		
 		btRun = ui.findChild("Run");
 		if (!btRun.checked) btRun.checked=true;
@@ -250,6 +253,7 @@ function stopDelta()
 	with(dev)
 	{
 		if (tcs1.autoMode || tcs2.autoMode) return;
+        jobs.t.deltaLoop.disarm();
 		nvm.disarm();
 		src.disarm();
 		ui = figs.deltaCtrl.widget();

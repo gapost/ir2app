@@ -281,7 +281,7 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 		
 		// Run/Stop
 		runButton = ui.findChild("Run");
-		runButton.toggled.connect(startCryo);
+        runButton.toggled.connect(startTempCtrl);
 				
 		// 1st tab
 		bind(dev.dmm1.ch3.T,ui.findChild("T"));
@@ -433,6 +433,7 @@ function startTempCtrl(on)
 	{
 		if (on)
 		{
+            jobs.t.cryoLoop.disarm();
 			if (tcs1.armed)
 			{
 				tcs1.disarm();
@@ -482,9 +483,11 @@ function startTempCtrl(on)
 			tcs1.arm();
 			tcs2.arm();
             tc.arm();
+            jobs.t.cryoLoop.arm();
 		}
 		else
 		{
+            jobs.t.cryoLoop.disarm();
 			tcs1.disarm();
 			tcs1.off();
 			tcs2.disarm();
