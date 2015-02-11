@@ -29,7 +29,9 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 				signalName = "Sample Temperature 1"
 				unit = "K"
 				type = "CubicSpline"
-				fromTextFile("tables/TC_a_V_T.dat")
+                fromTextFile("tables/TC1_V_T.dat")
+                format = "f"
+                precision = 2
 			}
 		}
 		with(ch2)
@@ -46,7 +48,9 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 				signalName = "Sample Temperature 1"
 				unit = "K"
 				type = "CubicSpline"
-				fromTextFile("tables/TC_b_V_T.dat")
+                fromTextFile("tables/TC2_V_T.dat")
+                format = "f"
+                precision = 2;
 			}
 		}
 		with(ch3)
@@ -67,7 +71,8 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 				type = "CubicSpline"
 				range = [1.5,450]
 				fromTextFile("tables/Si19149R.dat")
-				
+                format = "f"
+                precision = 2;
 			}
 		}
 		
@@ -219,7 +224,7 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 			automode = false
 
 			// pid parameters
-			gain=1.3
+            gain=0.8
 			Ti=21
 			Td=2.75
 			b=1
@@ -272,7 +277,7 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 	createTempFigs(figs.rt,data.rt)
 	createTempFigs(figs.buff,data.buff)
 	
-	figs.newWidgetPane("cryoCtrl","ui/cryoTemperatureControl.ui")
+	figs.newWidgetPane("cryoCtrl","./ir2app/ui/cryoTemperatureControl.ui")
 	with(figs.cryoCtrl)
 	{
 		setTitle("Cryostat Control")
@@ -314,7 +319,7 @@ function createTempControl(gpib,loop,loopPeriod,dataBuffer)
 }		
 function createSampleControlWidget()
 {
-	figs.newWidgetPane("sampleCtrl","ui/sampleControl.ui");
+	figs.newWidgetPane("sampleCtrl","./ir2app/ui/sampleControl.ui");
 	with(figs.sampleCtrl)
 	{
 		setTitle("Sample T Control")
@@ -575,20 +580,20 @@ function showTemperatureChannels(on)
 			dmm1.ch3.T.show()
 			dmm1.ch1.T.show()
 			dmm1.ch2.T.show()
-			dev.nvm.R1.show()
+            /*dev.nvm.R1.show()
 			dev.nvm.R2.show()
 			dev.nvm.R1.T.show()
-			dev.nvm.R2.T.show()
+            dev.nvm.R2.T.show()*/
 		}
 		else
 		{
 			dmm1.ch3.T.hide()
 			dmm1.ch1.T.hide()
 			dmm1.ch2.T.hide()
-			dev.nvm.R1.hide()
+            /*dev.nvm.R1.hide()
 			dev.nvm.R2.hide()
 			dev.nvm.R1.T.hide()
-			dev.nvm.R2.T.hide()
+            dev.nvm.R2.T.hide()*/
 		}
 	}
 }

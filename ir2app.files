@@ -13,3 +13,5 @@ ui/deltaControl.ui
 ui/irradControl.ui
 ui/main.ui
 ui/sampleControl.ui
+auxControl.js
+RvsT.js

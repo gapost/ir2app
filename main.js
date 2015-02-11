@@ -2,7 +2,7 @@ loopPeriod = 333; // ms
 irradiation = false;
 measDelay = 3;
 
-exec("./include.js")
+exec("./ir2app/include.js")
 
 
 print("Creating Main Aqcuisition Loop ...")
@@ -55,7 +55,7 @@ print("Creating GPIB interface ...")
 with(dev) {
 	// gpib
     newInterface("gpib","GPIB")
-	gpib.timeout = 2000 // ms
+    gpib.timeout = 1000 // ms
 	gpib.open()
 }
 
@@ -64,6 +64,7 @@ createDeltaControl(dev.gpib,jobs.t.deltaLoop,jobs.buff)
 createTempControl(dev.gpib,jobs.t.cryoLoop,loopPeriod,jobs.buff)
 //createIrradiationControl(jobs.t.measLoop,jobs.buff,loopPeriod*measDelay) 
 createRateMonitors(jobs.t.cryoLoop,loopPeriod,jobs.buff);
+createPressureIndicator(jobs.t.measLoop,jobs.buff);
 
 // set a 3 min real-time buffer
 data.rt.setCapacity(Math.round(3*60*1000/loopPeriod/measDelay));
@@ -84,7 +85,7 @@ function startMainLoop(on)
 	}
 }
 
-figs.newWidgetPane("mainCtrl","ui/main.ui");
+figs.newWidgetPane("mainCtrl","./ir2app/ui/main.ui");
 with(figs.mainCtrl)
 {
 	setTitle("Main Loop Control")
@@ -105,9 +106,10 @@ with(figs.mainCtrl)
 
 jobs.t.clock.show()
 showTemperatureChannels(1);
-showRateChannels(1)
+showRateChannels(1);
+showPressureChannels(1);
 
-restoreWindowState("windowState.dat");
+restoreWindowState("./ir2app/windowState.dat");
 
 
 startMainLoop(true);

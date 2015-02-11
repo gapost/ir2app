@@ -21,8 +21,8 @@ function setRratio(alpha)
 
 function createDeltaControl(gpib,loop,dataBuffer)
 {
-	var alpha = 0.945/100 // deviation (R12-R23)/R13
-	var R15 = 8.51365 // Resistance at 15K
+    var alpha = 17.6/100 // deviation (R12-R23)/R13
+    var R15 = 6.6513 // Resistance at 15K
 	with(dev)
 	{
 		newDevice("nvm",gpib,7,"K2182")
@@ -45,8 +45,10 @@ function createDeltaControl(gpib,loop,dataBuffer)
 					signalName = "Sample Resistance 1-3"
 					unit = "mOhm"
 					averaging = "Delta"
-					depth = 15
+                    depth = 9
 					parserExpression = "abs(x)";
+                    format = "f"
+                    precision = 3
 				}
 				newJob("V","DataChannel");
 				with(V)
@@ -64,7 +66,7 @@ function createDeltaControl(gpib,loop,dataBuffer)
 					signalName = "Sample Resistance 2-3"
 					unit = "mOhm"
 					averaging = "Delta"
-					depth = 15
+                    depth = 9
 					parserExpression = "abs(x)";
 				}
 				newJob("V","DataChannel");
@@ -87,6 +89,8 @@ function createDeltaControl(gpib,loop,dataBuffer)
 				offset=+100;
 				signalName = "100 (R12 - R23) / R13"
 				units = "%"
+                format = "f"
+                precision = 2;
 			}
 			newJob("R1","BinaryOp")
 			with(R1) {
@@ -102,7 +106,7 @@ function createDeltaControl(gpib,loop,dataBuffer)
 					signalName = "Sample Temperature 1"
 					unit = "K"
 					type = "CubicSpline"
-					fromTextFile("tables/Fe10Cr.R3_R_T.dat")
+                    fromTextFile("tables/S_R_T.dat")
 					range = [1,1000];
 				}
 			}
@@ -120,7 +124,7 @@ function createDeltaControl(gpib,loop,dataBuffer)
 					signalName = "Sample Temperature 2"
 					unit = "K"
 					type = "CubicSpline"
-					fromTextFile("tables/Fe10Cr.R3_R_T.dat")
+                    fromTextFile("tables/S_R_T.dat")
 					range = [1,1000];
 				}
 			}
@@ -161,7 +165,7 @@ function createDeltaControl(gpib,loop,dataBuffer)
 	createDeltaFigs(figs.rt,data.rt)
 	createDeltaFigs(figs.buff,data.buff)
 	
-    figs.newWidgetPane("deltaCtrl","ui/deltaControl.ui")
+    figs.newWidgetPane("deltaCtrl","./ir2app/ui/deltaControl.ui")
 	with(figs.deltaCtrl)
 	{
 		setTitle("Delta-Mode R Meas.")

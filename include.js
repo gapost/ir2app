@@ -1,10 +1,11 @@
-exec("./fileutil.js")
+exec("./ir2app/fileutil.js")
 
 
-exec("./deltaControl.js")
-exec("./irradControl.js")
-exec("./TempControl.js")
-exec("./rates.js")
+exec("./ir2app/deltaControl.js")
+exec("./ir2app/irradControl.js")
+exec("./ir2app/TempControl.js")
+exec("./ir2app/rates.js")
+exec("./ir2app/auxControl.js")
 
 
 function startRecording()

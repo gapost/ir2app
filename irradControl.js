@@ -56,7 +56,7 @@ function createIrradiationControl(loop,dataBuffer,loopPeriod)
 	createIrradFigs(figs.rtBeam,  data.rt)
 	createIrradFigs(figs.buffBeam,data.buff)
 	
-	figs.newWidgetPane("irradCtrl","ui/irradControl.ui")
+	figs.newWidgetPane("irradCtrl","./ir2app/ui/irradControl.ui")
 	with(figs.irradCtrl)
 	{
 		setTitle("Ion beam Ctrl")

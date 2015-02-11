@@ -5,33 +5,45 @@ function createRateMonitors(loop,loopPeriod,dataBuffer)
 	with(jobs)
 	{
 		newJob("dTdt","LinearCorrelator");
-		dTdt.setXChannel(t.clock);
-		dTdt.setYChannel(dev.dmm1.ch3.T);
-		dTdt.multiplier=60;
-		dTdt.depth = Math.round(integTime*1000/loopPeriod)
-		dTdt.signalName = "dT/dt -Cryo"
-		dTdt.unit = "K/min"
-		dTdt.arm();
+        with (dTdt) {
+            setXChannel(t.clock);
+            setYChannel(dev.dmm1.ch3.T);
+            multiplier=60;
+            depth = Math.round(integTime*1000/loopPeriod)
+            signalName = "dT/dt -Cryo"
+            unit = "K/min"
+            format = "e";
+            precision = 1;
+            arm();
+        }
 		loop.commit(dTdt);
 		
 		newJob("dT2dt","LinearCorrelator");
-		dT2dt.setXChannel(t.clock);
-		dT2dt.setYChannel(dev.dmm1.ch1.T);
-		dT2dt.multiplier=60;
-		dT2dt.depth = Math.round(integTime*1000/loopPeriod)
-		dT2dt.signalName = "dT/dt - Sample"
-		dT2dt.unit = "K/min"
-		dT2dt.arm();
+        with (dT2dt) {
+            setXChannel(t.clock);
+            setYChannel(dev.dmm1.ch1.T);
+            multiplier=60;
+            depth = Math.round(integTime*1000/loopPeriod)
+            signalName = "dT/dt - Sample"
+            unit = "K/min"
+            format = "e";
+            precision = 1;
+            arm();
+        }
 		loop.commit(dT2dt);
 		
 		newJob("dRdt","LinearCorrelator");
-		dRdt.setXChannel(t.clock);
-		dRdt.setYChannel(dev.nvm.ch1.R);
-		dRdt.multiplier=60;
-		dRdt.depth = Math.round(integTime*1000/loopPeriod)
-		dRdt.signalName = "dR/dt - Sample"
-		dRdt.unit = "mOhm/min"
-		dRdt.arm();
+        with ( dRdt ) {
+            setXChannel(t.clock);
+            setYChannel(dev.nvm.ch1.R);
+            multiplier=60;
+            depth = Math.round(integTime*1000/loopPeriod)
+            signalName = "dR/dt - Sample"
+            unit = "mOhm/min"
+            format = "e";
+            precision = 1;
+            arm();
+        }
 		loop.commit(dRdt);
 
 	}
@@ -101,13 +113,13 @@ function showRateChannels(on)
 		if (on) 
 		{
 			dTdt.show()
-			dT2dt.show()
+            //dT2dt.show()
 			dRdt.show()
 		}
 		else
 		{
 			dTdt.hide()
-			dT2dt.hide()
+            //dT2dt.hide()
 			dRdt.hide()
 		}
 	}

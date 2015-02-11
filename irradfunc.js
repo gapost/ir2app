@@ -1,4 +1,4 @@
-exec("./include.js")
+exec("./ir2ap/include.js")
 
 function checkStability(maxdRdt)
 {
