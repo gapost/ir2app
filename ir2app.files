@@ -7,7 +7,7 @@ irradfunc.js
 main.js
 rates.js
 README.md
-TempControl.js
+tempControl.js
 ui/cryoTemperatureControl.ui
 ui/deltaControl.ui
 ui/irradControl.ui
@@ -15,3 +15,5 @@ ui/main.ui
 ui/sampleControl.ui
 auxControl.js
 RvsT.js
+core.js
+ui/axiscontrol.ui
