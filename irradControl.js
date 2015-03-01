@@ -1,4 +1,52 @@
 var IrradCtrl = {
+    maxdRdt : 2e-5,
+
+    cycle : function (irradTime) {
+
+        // start recording signals into buffer
+        Core.startRecording();
+
+        // clear the real-time buffer
+        data.rt.clear();
+
+        Core.timedPrint("About to start irradiation for " + irradTime +" min ...");
+
+        wait(60*1000); // 1 min to record starting resistance value
+
+        var R0 = data.rt.R13.mean(); // start resistance
+
+
+        Core.timedPrint("Beam on ...")
+        IrradCtrl.beamOn(1);
+        wait(irradTime*60*1000); // irradTime in min
+
+        IrradCtrl.beamOn(0);
+        Core.timedPrint("Beam off ...")
+        wait(60000)
+
+        waitForStable(IrradCtrl.maxdRdt);
+        Core.timedPrint("Stable!")
+
+        // clear the real-time buffer
+        data.rt.clear();
+
+        Core.timedPrint("Measuring for 1 minute")
+        wait(60000);
+
+        // save the buffer
+        Core.save("Beam On for " + irradTime +  " min at Low Temperature");
+
+        var R1 = data.rt.R13.mean();
+        print("R0 = " + R0.toFixed(4))
+        print("R1 = " + R1.toFixed(4))
+        R1 = R1-R0;
+        print("DR = " + R1.toFixed(4))
+
+
+        //setR15offset(8.51365+(R1-8.5596));	// correct the value of R15 for the change in R
+
+    },
+
     createChannels : function() {
         var loop = jobs.t.auxLoop;
         var loopPeriod = jobs.t.period * loop.delay;
@@ -38,6 +86,7 @@ var IrradCtrl = {
         }
         loop.commit(dev.beamCounter);
     },
+
     create : function () {
         var dataBuffer = jobs.buff;
 
@@ -116,8 +165,7 @@ var IrradCtrl = {
     },
 
 
-    showChannels : function (on)
-    {
+    showChannels : function (on) {
         with(dev.beamCounter)
         {
             if (on)

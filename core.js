@@ -112,8 +112,40 @@ var Core = {
     },
     save : function (comment)
     {
-        h5write("data/"+fileAutoNumber()+".h5",comment)
+        var num = Core.fileAutoNumber();
+        var fname = "data/" + num + ".h5";
+        h5write(fname,comment)
+        print("Saved data on file " + fname);
+    },
+    fileAutoNumber : function ()
+    {
+        var i = textLoad("data/_autonumber");
+        i++;
+        textSave(i.toString(),"data/_autonumber");
+        if (i<1000) return "0"+i.toString();
+        else return i.toString();
+    },
+    checkStability : function (maxdRdt) {
+        var dRdt = jobs.dRdt.value();
+        if (Math.abs(dRdt)>maxdRdt) return false;
+        else return true;
+    },
+    waitForStable : function (maxdRdt) {
+        //wait for stabilization. Check every 30"
+        var i = 0;
+        while(!Core.checkStability(maxdRdt))
+        {
+            var dRdt = jobs.dRdt.value();
+            Core.timedPrint("Waiting to stabilize. dR/dt = " + dRdt.toExponential(2) + " . Limit = " + maxdRdt.toExponential(2));
+            wait(30000);
+        }
+    },
+    timedPrint : function (msg) {
+        var Dt = new Date();
+        print(Dt.toLocaleTimeString() + ". " + msg)
+
     }
+
 }
 
 

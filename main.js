@@ -7,6 +7,9 @@ var alpha = 17.6/100; // deviation (R12-R23)/R13
 var R15 = 6.6513; // Resistance at 15K
 var Is = 0.020; // sample current = 20mA
 
+data.sampleName = "Fe-10Cr-760ppmC";
+data.irradNum = 27;
+
 exec("./ir2app/include.js")
 
 

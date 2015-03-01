@@ -1,9 +1,7 @@
 annealfunc.js
 deltaControl.js
-fileutil.js
 include.js
 irradControl.js
-irradfunc.js
 main.js
 rates.js
 README.md
