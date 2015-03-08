@@ -1,0 +1,11 @@
+TOdO for ir2app
+
+- Make button for clear data.rt
+- Sounds
+- Remote channel access - signal access
+- Tabbed view to be saved in window state
+- Message channel / Status Bar
+- Check the "bind" method - channels should be displayed correctly
+- cannot change the current when Ts auto -> should be visible!
+- make a mechanism for MessageBox from JS. Also entering values on the command line or with user dialog. 
+ 

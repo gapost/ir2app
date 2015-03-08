@@ -122,6 +122,10 @@ var TempCtrl = {
                 mode = "ConstantVoltage" //"ConstantPower"
                 load = 40 // 40 Ohm heater
                 dImax = 0.01
+				with(W) {
+					format = f;
+					precision = 4;
+				}
             }
 
             newTemperatureController("tc",dmm1.ch3.T)
@@ -184,6 +188,10 @@ var TempCtrl = {
                 mode = "ConstantCurrent" //"ConstantPower"
                 load = Rheater1
                 dImax = 0.1
+				with(W) {
+					format = f;
+					precision = 4;
+				}
             }
             newDevice("cpx2",tcp3,0,"TTi")
             with(cpx2)
@@ -195,6 +203,10 @@ var TempCtrl = {
                 load = Rheater2
                 dImax = 0.1
                 outputNumber = 2;
+				with(W) {
+					format = f;
+					precision = 4;
+				}
             }
 
 

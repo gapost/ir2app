@@ -4,7 +4,7 @@ var tcpTimeout = 1000;
 var Rheater1 = 0.08375;
 var Rheater2 = 0.0811;
 var alpha = 17.6/100; // deviation (R12-R23)/R13
-var R15 = 6.6513; // Resistance at 15K
+var R15 = 6.6515; // Resistance at 15K
 var Is = 0.020; // sample current = 20mA
 
 data.sampleName = "Fe-10Cr-760ppmC";
@@ -19,7 +19,7 @@ Delta.create(alpha,R15);
 TempCtrl.create(tcpTimeout,Rheater1,Rheater2);
 RateMonitors.create();
 Aux.create();
-IrradCtrl.create();
+//IrradCtrl.create();
 
 // allocate buffers
 Core.setBufferCap();

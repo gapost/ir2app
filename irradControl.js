@@ -1,5 +1,5 @@
 var IrradCtrl = {
-    maxdRdt : 2e-5,
+    maxdRdt : 8e-5,
 
     cycle : function (irradTime) {
 
@@ -24,7 +24,7 @@ var IrradCtrl = {
         Core.timedPrint("Beam off ...")
         wait(60000)
 
-        waitForStable(IrradCtrl.maxdRdt);
+        Core.waitForStable(IrradCtrl.maxdRdt);
         Core.timedPrint("Stable!")
 
         // clear the real-time buffer
@@ -152,7 +152,7 @@ var IrradCtrl = {
 
     beamOn : function (on) {
         //print("called..." + (on ? "1" : "0"))
-        dev.beamCap.ch1.push(on ? 1 : 0);
+        dev.beamCap.ch1.push(on ? 0 : 1);
         dev.beamCap.write();
         var ui = figs.irradCtrl.widget();
         var btOn = ui.findChild("beamOn");

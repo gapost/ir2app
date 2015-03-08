@@ -49,10 +49,10 @@ var Delta = {
                         signalName = "Sample Resistance 1-3"
                         unit = "mOhm"
                         averaging = "Delta"
-                        depth = 9
+                        depth = 13
                         parserExpression = "abs(x)";
                         format = "f"
-                        precision = 3
+                        precision = 4
                     }
                     newJob("V","DataChannel");
                     with(V)
@@ -70,7 +70,7 @@ var Delta = {
                         signalName = "Sample Resistance 2-3"
                         unit = "mOhm"
                         averaging = "Delta"
-                        depth = 9
+                        depth = 13
                         parserExpression = "abs(x)";
                     }
                     newJob("V","DataChannel");
