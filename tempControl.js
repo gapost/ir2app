@@ -123,7 +123,7 @@ var TempCtrl = {
                 load = 40 // 40 Ohm heater
                 dImax = 0.01
 				with(W) {
-					format = f;
+                    format = "f";
 					precision = 4;
 				}
             }
@@ -189,7 +189,7 @@ var TempCtrl = {
                 load = Rheater1
                 dImax = 0.1
 				with(W) {
-					format = f;
+                    format = "f";
 					precision = 4;
 				}
             }
@@ -204,7 +204,7 @@ var TempCtrl = {
                 dImax = 0.1
                 outputNumber = 2;
 				with(W) {
-					format = f;
+                    format = "f";
 					precision = 4;
 				}
             }

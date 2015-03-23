@@ -92,10 +92,11 @@ var Aux = {
         this.createAxis();
 
         print("Creating pressure measurement channels ...")
-        dev.newDAQmxTask("ai");
-        dev.ai.addAnalogInputChannel("Dev1/ai0","NRSE",0.,10.);
-        dev.ai.addAnalogInputChannel("Dev1/ai1","NRSE",0.,10.);
-        with(dev.ai.ch1)
+        dev.newNI6221("ni","/dev/comedi0");
+        dev.ni.newAnalogInput("ai");
+        dev.ni.ai.addChannel(0,"COMMON");
+        dev.ni.ai.addChannel(1,"COMMON");
+        with(dev.ni.ai.ch1)
         {
             signalName = "Low Vacuum Gauge"
             unit = "mbar"
@@ -103,7 +104,7 @@ var Aux = {
             format = "E";
             precision = 1;
         }
-        with(dev.ai.ch2)
+        with(dev.ni.ai.ch2)
         {
             signalName = "High Vacuum Gauge"
             unit = "mbar"
@@ -111,13 +112,14 @@ var Aux = {
             format = "E";
             precision = 1;
         }
-        dev.ai.on()
-        dev.ai.arm()
+        dev.ni.open();
+        dev.ni.ai.on();
+        dev.ni.ai.arm();
 
-        dataBuffer.addChannel(dev.ai.ch1);
-        dataBuffer.addChannel(dev.ai.ch2);
+        dataBuffer.addChannel(dev.ni.ai.ch1);
+        dataBuffer.addChannel(dev.ni.ai.ch2);
 
-        loop.commit(dev.ai);
+        loop.commit(dev.ni.ai);
         loop.commit(dev.z);
 
 
@@ -133,7 +135,7 @@ var Aux = {
 
     showChannels : function (on)
     {
-        with(dev.ai)
+        with(dev.ni.ai)
         {
             if (on)
             {

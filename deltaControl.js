@@ -221,7 +221,7 @@ var Delta = {
     startImpl : function (srcCurrent) {
         with(dev)
         {
-            if (tcs1.autoMode || tcs2.autoMode) return;
+            //if (tcs1.autoMode || tcs2.autoMode) return;
 
             jobs.t.deltaLoop.disarm();
             nvm.disarm();
@@ -260,7 +260,7 @@ var Delta = {
     stopImpl : function () {
         with(dev)
         {
-            if (tcs1.autoMode || tcs2.autoMode) return;
+            //if (tcs1.autoMode || tcs2.autoMode) return;
             jobs.t.deltaLoop.disarm();
             nvm.disarm();
             src.disarm();

@@ -35,7 +35,8 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../images/player_play.png</normaloff>../images/player_play.png</iconset>
+         <normaloff>player_play.png</normaloff>
+         <normalon>player_pause.png</normalon>player_play.png</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
