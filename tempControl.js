@@ -310,8 +310,7 @@ var TempCtrl = {
         }
     },
 
-    createFigs : function(Figs,Data)
-    {
+    createFigs : function(Figs,Data)    {
         with(Figs)
         {
             with(Data)
@@ -349,6 +348,7 @@ var TempCtrl = {
             }
         }
     },
+	
     createWidgets : function() {
         figs.newWidgetPane("cryoCtrl","./ir2app/ui/cryoTemperatureControl.ui")
         with(figs.cryoCtrl)
@@ -435,6 +435,7 @@ var TempCtrl = {
 
         }
     },
+
     start : function(on) {
         with(dev)
         {
@@ -522,6 +523,12 @@ var TempCtrl = {
     },
 
     setSampleTs : function(Ts) {
+		TempCtrl.setSamplePIDparameters(Ts);
+        dev.tc.setPoint = Ts;
+    },
+	
+    setCryoTs : function(Ts) {
+		TempCtrl.setCryoPIDparameters(Ts);		
         with(dev)
         {
             tcs1.setPoint = Ts;
@@ -531,6 +538,7 @@ var TempCtrl = {
         var btn = ui.findChild("setPoint");
         btn.value = Ts;
     },
+	
     selectTCinput : function(on) {
         if (dev.tcs1.autoMode || dev.tcs2.autoMode) return;
 
@@ -558,6 +566,7 @@ var TempCtrl = {
             btn.setChecked(1);
         }
     },
+
     setSampleAuto : function(on) {
         if (on)
         {
@@ -579,6 +588,7 @@ var TempCtrl = {
         var btn = ui.findChild("autoMode");
         btn.setChecked(on);
     },
+
     showChannels : function(on) {
         with(dev)
         {
@@ -595,7 +605,114 @@ var TempCtrl = {
                 dmm1.ch2.T.hide()
             }
         }
-    }
+    },
+
+    setSamplePIDparameters : function (Ta) {
+        if (Ta <= 60) {
+            dev.tcs1.gain = 0.001;
+            dev.tcs2.gain = 0.001;
+            dev.tcs1.Ti = 6;
+            dev.tcs2.Ti = 6;
+            dev.tcs1.beta = 1;
+            dev.tcs2.beta = 1;
+        } else if (Ta <= 90) {
+            dev.tcs1.gain = 0.0015;
+            dev.tcs2.gain = 0.0015;
+            dev.tcs1.Ti = 6;
+            dev.tcs2.Ti = 6;
+            dev.tcs1.beta = 1;
+            dev.tcs2.beta = 1;
+        } else if (Ta <= 120) {
+            dev.tcs1.gain = 0.0015;
+            dev.tcs2.gain = 0.0015;
+            dev.tcs1.Ti = 8;
+            dev.tcs2.Ti = 8;
+            dev.tcs1.beta = 0.95;
+            dev.tcs2.beta = 0.95;
+        } else if (Ta <= 160) {
+            dev.tcs1.gain = 0.0015;
+            dev.tcs2.gain = 0.0015;
+            dev.tcs1.Ti = 10;
+            dev.tcs2.Ti = 10;
+            dev.tcs1.beta = 0.9;
+            dev.tcs2.beta = 0.9;
+        } else if (Ta <= 200) {
+            dev.tcs1.gain = 0.0015;
+            dev.tcs2.gain = 0.0015;
+            dev.tcs1.Ti = 12;
+            dev.tcs2.Ti = 12;
+            dev.tcs1.beta = 0.85;
+            dev.tcs2.beta = 0.85;
+        } else if (Ta <= 260) {
+            dev.tcs1.gain = 0.0015;
+            dev.tcs2.gain = 0.0015;
+            dev.tcs1.Ti = 14;
+            dev.tcs2.Ti = 14;
+            dev.tcs1.beta = 0.825;
+            dev.tcs2.beta = 0.825;
+        } else if (Ta <= 300) {
+            dev.tcs1.gain = 0.002;
+            dev.tcs2.gain = 0.002;
+            dev.tcs1.Ti = 14;
+            dev.tcs2.Ti = 14;
+            dev.tcs1.beta = 0.8;
+            dev.tcs2.beta = 0.8;
+        } else if (Ta <= 400) {
+            dev.tcs1.gain = 0.0022;
+            dev.tcs2.gain = 0.0022;
+            dev.tcs1.Ti = 14;
+            dev.tcs2.Ti = 14;
+            dev.tcs1.beta = 0.8;
+            dev.tcs2.beta = 0.8;
+        } else if (Ta <= 500) {
+            dev.tcs1.gain = 0.0022;
+            dev.tcs2.gain = 0.0022;
+            dev.tcs1.Ti = 12;
+            dev.tcs2.Ti = 12;
+            dev.tcs1.beta = 0.8;
+            dev.tcs2.beta = 0.8;
+        } else {
+            dev.tcs1.gain = 0.0022;
+            dev.tcs2.gain = 0.0022;
+            dev.tcs1.Ti = 10;
+            dev.tcs2.Ti = 10;
+            dev.tcs1.beta = 0.75;
+            dev.tcs2.beta = 0.75;
+        }
+    },
+
+	setCryoPIDparameters : function(Ts) {
+		var g = dev.tc.gain;
+		var Ti = dev.tc.Ti;
+		var Td = dev.tc.Td;
+		var Tr = dev.tc.Tr;
+		if (Ts<=30.0) {
+			g = 0.8;
+			Ti = 25;
+			Td = 2.75;
+			Tr = 7.6;
+		} else if (Ts<=50) {
+			g = 1.0;
+			Ti = 25;
+			Td = 6;
+			Tr = 11.7;
+		} else if (Ts<=80) {
+			g = 2;
+			Ti = 32;
+			Td = 8;
+			Tr = 16;
+		} else if (Ts<=200) {
+			g = 2.62;
+			Ti = 50;
+			Td = 12.5;
+			Tr = 25;
+		} else {
+			g = 2.88;
+			Ti = 75;
+			Td = 19;
+			Tr = 38;
+		}
+	}
 }
 
 

@@ -24,7 +24,7 @@ var IrradCtrl = {
         Core.timedPrint("Beam off ...")
         wait(60000)
 
-        Core.waitForStable(IrradCtrl.maxdRdt);
+        RateMonitors.waitForStable(IrradCtrl.maxdRdt);
         Core.timedPrint("Stable!")
 
         // clear the real-time buffer

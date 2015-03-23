@@ -5,6 +5,7 @@ exec("./ir2app/irradControl.js")
 exec("./ir2app/rates.js")
 exec("./ir2app/auxControl.js")
 exec("./ir2app/annealfunc.js")
+exec("./ir2app/meas.js")
 
 
 

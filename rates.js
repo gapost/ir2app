@@ -54,6 +54,23 @@ var RateMonitors = {
 
     },
 
+    checkStability : function (maxdRdt) {
+        var dRdt = jobs.dRdt.value();
+        if (Math.abs(dRdt)>maxdRdt) return false;
+        else return true;
+    },
+	
+    waitForStable : function (maxdRdt) {
+        //wait for stabilization. Check every 30"
+        var i = 0;
+        while(!RateMonitors.checkStability(maxdRdt))
+        {
+            var dRdt = jobs.dRdt.value();
+            Core.timedPrint("Waiting to stabilize. dR/dt = " + dRdt.toExponential(2) + " . Limit = " + maxdRdt.toExponential(2));
+            wait(30000);
+        }
+    },
+	
     showChannels : function (on) {
         with(jobs)
         {

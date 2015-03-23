@@ -11,7 +11,6 @@ var Anneal = {
         var R0 = data.rt.R13.mean();
 
         Core.timedPrint("Heating up ...")
-		Anneal.setPIDparameters(Ta);
         TempCtrl.setSampleTs(Ta)
         wait(60*1000);
         Core.timedPrint("Annealing at " + Ta.toFixed(2) + "K, for " + ta + " min")
@@ -20,12 +19,11 @@ var Anneal = {
 
         Core.timedPrint("Cooling down... ")
         TempCtrl.setSampleTs(Anneal.baseTemperature);
-		Anneal.setPIDparameters(Anneal.baseTemperature);
 
         Core.timedPrint("Stabilizing at base T for "+ tw + " min")
         wait(tw*60*1000);
 
-        Core.waitForStable(Anneal.maxdRdt)
+        RateMonitors.waitForStable(Anneal.maxdRdt)
 
         Core.timedPrint("Measuring R for 1 min")
         data.rt.clear();
@@ -50,79 +48,6 @@ var Anneal = {
         for(var i=0; i<n; ++i)
         {
             Anneal.cycle(Ta[i],ta[i],tw[i]);
-        }
-    },
-    setPIDparameters : function (Ta) {
-        if (Ta <= 60) {
-            dev.tcs1.gain = 0.001;
-            dev.tcs2.gain = 0.001;
-            dev.tcs1.Ti = 6;
-            dev.tcs2.Ti = 6;
-            dev.tcs1.beta = 1;
-            dev.tcs2.beta = 1;
-        } else if (Ta <= 90) {
-            dev.tcs1.gain = 0.0015;
-            dev.tcs2.gain = 0.0015;
-            dev.tcs1.Ti = 6;
-            dev.tcs2.Ti = 6;
-            dev.tcs1.beta = 1;
-            dev.tcs2.beta = 1;
-        } else if (Ta <= 120) {
-            dev.tcs1.gain = 0.0015;
-            dev.tcs2.gain = 0.0015;
-            dev.tcs1.Ti = 8;
-            dev.tcs2.Ti = 8;
-            dev.tcs1.beta = 0.95;
-            dev.tcs2.beta = 0.95;
-        } else if (Ta <= 160) {
-            dev.tcs1.gain = 0.0015;
-            dev.tcs2.gain = 0.0015;
-            dev.tcs1.Ti = 10;
-            dev.tcs2.Ti = 10;
-            dev.tcs1.beta = 0.9;
-            dev.tcs2.beta = 0.9;
-        } else if (Ta <= 200) {
-            dev.tcs1.gain = 0.0015;
-            dev.tcs2.gain = 0.0015;
-            dev.tcs1.Ti = 12;
-            dev.tcs2.Ti = 12;
-            dev.tcs1.beta = 0.85;
-            dev.tcs2.beta = 0.85;
-        } else if (Ta <= 260) {
-            dev.tcs1.gain = 0.0015;
-            dev.tcs2.gain = 0.0015;
-            dev.tcs1.Ti = 14;
-            dev.tcs2.Ti = 14;
-            dev.tcs1.beta = 0.825;
-            dev.tcs2.beta = 0.825;
-        } else if (Ta <= 300) {
-            dev.tcs1.gain = 0.002;
-            dev.tcs2.gain = 0.002;
-            dev.tcs1.Ti = 14;
-            dev.tcs2.Ti = 14;
-            dev.tcs1.beta = 0.8;
-            dev.tcs2.beta = 0.8;
-        } else if (Ta <= 400) {
-            dev.tcs1.gain = 0.0022;
-            dev.tcs2.gain = 0.0022;
-            dev.tcs1.Ti = 14;
-            dev.tcs2.Ti = 14;
-            dev.tcs1.beta = 0.8;
-            dev.tcs2.beta = 0.8;
-        } else if (Ta <= 500) {
-            dev.tcs1.gain = 0.0022;
-            dev.tcs2.gain = 0.0022;
-            dev.tcs1.Ti = 12;
-            dev.tcs2.Ti = 12;
-            dev.tcs1.beta = 0.8;
-            dev.tcs2.beta = 0.8;
-        } else {
-            dev.tcs1.gain = 0.0022;
-            dev.tcs2.gain = 0.0022;
-            dev.tcs1.Ti = 10;
-            dev.tcs2.Ti = 10;
-            dev.tcs1.beta = 0.75;
-            dev.tcs2.beta = 0.75;
         }
     },
     makeProgram : function() {
