@@ -1,14 +1,14 @@
 var loopPeriod = 333; // ms
 var measDelay = 3;
 var tcpTimeout = 1000;
-var Rheater1 = 0.08375;
-var Rheater2 = 0.0811;
-var alpha = 17.6/100; // deviation (R12-R23)/R13
-var R15 = 6.6515; // Resistance at 15K
-var Is = 0.020; // sample current = 20mA
+var Rheater1 = 0.0786;
+var Rheater2 = 0.0910;
+var alpha = 1.3/100; // deviation (R12-R23)/R13
+var R15 = 9.499; // Resistance at 15K
+var Is = 0.030; // sample current = 20mA
 
-data.sampleName = "Fe-10Cr-760ppmC";
-data.irradNum = 27;
+data.sampleName = "Fe-10Cr, Fe10Cr.R1 + electropolished, annealed 800C, 12h";
+data.irradNum = 28;
 
 exec("./ir2app/include.js")
 

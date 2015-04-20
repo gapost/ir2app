@@ -29,7 +29,7 @@ var TempCtrl = {
                     signalName = "Sample Temperature 1"
                     unit = "K"
                     type = "CubicSpline"
-                    fromTextFile("tables/TC1_V_T.dat")
+                    fromTextFile("tables/TC_V_T.dat")
                     format = "f"
                     precision = 2
                 }
@@ -47,7 +47,7 @@ var TempCtrl = {
                     signalName = "Sample Temperature 2"
                     unit = "K"
                     type = "CubicSpline"
-                    fromTextFile("tables/TC2_V_T.dat")
+                    fromTextFile("tables/TC_V_T.dat")
                     format = "f"
                     precision = 2;
                 }
@@ -522,13 +522,13 @@ var TempCtrl = {
         }
     },
 
-    setSampleTs : function(Ts) {
-		TempCtrl.setSamplePIDparameters(Ts);
+    setCryoTs : function(Ts) {
+		TempCtrl.setCryoPIDparameters(Ts);
         dev.tc.setPoint = Ts;
     },
 	
-    setCryoTs : function(Ts) {
-		TempCtrl.setCryoPIDparameters(Ts);		
+    setSampleTs : function(Ts) {
+		TempCtrl.setSamplePIDparameters(Ts);		
         with(dev)
         {
             tcs1.setPoint = Ts;
