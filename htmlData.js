@@ -25,12 +25,13 @@ html += date.toLocaleTimeString();
 html += "</td></tr>";
 
 // Beam on-off
+var NI = ispc() ? dev : dev.ni;
 html += "<tr><td>";
 html += "Beam status";
 html += "</td><td>";
 html += "-";
 html += "</td><td>";
-html += dev.beamCap.ch1.value() ? "Off" : "On";
+html += NI.beamCap.ch1.value() ? "Off" : "On";
 html += "</td></tr>";
 
 // Beam current
@@ -39,7 +40,7 @@ html += "Beam current";
 html += "</td><td>";
 html += "% FS";
 html += "</td><td>";
-var i = dev.beamCounter.ch1.Ib;
+var i = NI.beamCounter.ch1.Ib;
 html += i.toFixed(1);
 html += "</td></tr>";
 

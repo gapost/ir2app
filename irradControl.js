@@ -47,7 +47,7 @@ var IrradCtrl = {
 
     },
 
-    createChannels : function() {
+    createDAQmxChannels : function() {
         var loop = jobs.t.auxLoop;
         var loopPeriod = jobs.t.period * loop.delay;
         with(dev)
@@ -87,13 +87,55 @@ var IrradCtrl = {
         loop.commit(dev.beamCounter);
     },
 
+    createComediChannels : function() {
+        var loop = jobs.t.auxLoop;
+        var loopPeriod = jobs.t.period * loop.delay;
+
+        if (!dev.ni) dev.newNI6221("ni","/dev/comedi0");
+
+        var ni = dev.ni;
+        var ctr = ni.newCounter("beamCounter",0);
+        ctr.addChannel(0);
+        var ctrChannel = ctr.ch1;
+        ctrChannel.signalName = "Beam Counts";
+        ctrChannel.unit = "Cnts";
+        var Ib = ctrChannel.newJob("Ib","DataChannel");
+        Ib.signalName = "Average Beam Current";
+        Ib.unit = "% full scale";
+        Ib.depth = Math.round(5*1000/loopPeriod); // 5 s averaging
+        Ib.averaging = "Running";
+        Ib.multiplier = (1000/loopPeriod);
+        Ib.format = "f";
+        Ib.precision = 1;
+
+
+            ctr.on();
+            ctr.arm();
+
+        var beamCap = ni.newDigitalOutput("beamCap");
+        beamCap.addChannel(0);
+        beamCap.on();
+
+        loop.commit(dev.ni.beamCounter);
+    },
+
     create : function () {
         var dataBuffer = jobs.buff;
 
-        this.createChannels();
+        var ctrChannel, ibChannel;
+        if (ispc()) {
+            IrradCtrl.createDAQmxChannels();
+            ctrChannel = dev.beamCounter.ch1;
+            ibChannel = dev.beamCounter.ch1.Ib;
+        }
+        else {
+            IrradCtrl.createComediChannels();
+            ctrChannel = dev.ni.beamCounter.ch1;
+            ibChannel = dev.ni.beamCounter.ch1.Ib;
+        }
 
-        dataBuffer.addChannel(dev.beamCounter.ch1);
-        dataBuffer.addChannel(dev.beamCounter.ch1.Ib);
+        dataBuffer.addChannel(ctrChannel);
+        dataBuffer.addChannel(ibChannel);
 
         with(data.rt)
         {
@@ -128,8 +170,8 @@ var IrradCtrl = {
             runButton.clicked.connect(IrradCtrl.beamOnPressed);
 
 
-            bind(dev.beamCounter.ch1,ui.findChild("Icnts"));
-            bind(dev.beamCounter.ch1.Ib,ui.findChild("Ib"));
+            bind(ctrChannel,ui.findChild("Icnts"));
+            bind(ibChannel,ui.findChild("Ib"));
 
         }
 
@@ -158,8 +200,9 @@ var IrradCtrl = {
 
     beamOn : function (on) {
         //print("called..." + (on ? "1" : "0"))
-        dev.beamCap.ch1.push(on ? 0 : 1);
-        dev.beamCap.write();
+        var NI = ispc() ? dev : dev.ni;
+        NI.beamCap.ch1.push(on ? 0 : 1);
+        NI.beamCap.write();
         var ui = figs.irradCtrl.widget();
         var btOn = ui.findChild("beamOn");
         if (btOn.checked!=on) btOn.toggle(); //checked=true;
@@ -172,18 +215,17 @@ var IrradCtrl = {
 
 
     showChannels : function (on) {
-        with(dev.beamCounter)
+        var NI = ispc() ? dev : dev.ni;
+
+        if (on)
         {
-            if (on)
-            {
-                ch1.show()
-                ch1.Ib.show()
-            }
-            else
-            {
-                ch1.hide()
-                ch1.Ib.hide()
-            }
+            NI.beamCounter.ch1.show()
+            NI.beamCounter.ch1.Ib.show()
+        }
+        else
+        {
+            NI.beamCounter.ch1.hide()
+            NI.beamCounter.ch1.Ib.hide()
         }
     }
 
