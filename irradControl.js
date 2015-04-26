@@ -132,6 +132,12 @@ var IrradCtrl = {
             bind(dev.beamCounter.ch1.Ib,ui.findChild("Ib"));
 
         }
+
+        var scr = jobs.newJob("html","ScriptJob");
+        scr.code = textLoad("./ir2app/htmlData.js");
+        scr.arm();
+        t.measLoop.commit(scr);
+
     },
 
     createFigs : function (Figs,Data) {

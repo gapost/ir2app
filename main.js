@@ -19,7 +19,7 @@ Delta.create(alpha,R15);
 TempCtrl.create(tcpTimeout,Rheater1,Rheater2);
 RateMonitors.create();
 Aux.create();
-//IrradCtrl.create();
+IrradCtrl.create();
 
 // allocate buffers
 Core.setBufferCap();
