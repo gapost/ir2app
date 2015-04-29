@@ -178,7 +178,7 @@ var IrradCtrl = {
         var scr = jobs.newJob("html","ScriptJob");
         scr.code = textLoad("./ir2app/htmlData.js");
         scr.arm();
-        t.measLoop.commit(scr);
+        jobs.t.measLoop.commit(scr);
 
     },
 

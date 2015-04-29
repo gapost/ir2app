@@ -40,7 +40,7 @@ html += "Beam current";
 html += "</td><td>";
 html += "% FS";
 html += "</td><td>";
-var i = NI.beamCounter.ch1.Ib;
+var i = NI.beamCounter.ch1.Ib.value();
 html += i.toFixed(1);
 html += "</td></tr>";
 
