@@ -1,5 +1,5 @@
 var Anneal = {
-    baseTemperature : 1,
+    baseTemperature : 28,
     maxdRdt : 8e-5,
     cycle : function (Ta,ta,tw) {
         Core.startRecording();
@@ -33,8 +33,8 @@ var Anneal = {
         var dR = R1-R0;
 
 
-	data.Ta = Ta;
-	data.ta = ta;
+        data.Ta = Ta;
+        data.ta = ta;
         Core.save("Anneal step. Ta=" + Ta.toFixed(2) + "K, ta=" + ta.toFixed(2) + "min");
 
         print("R0 = " + R0.toFixed(4))
@@ -56,7 +56,8 @@ var Anneal = {
         var obj = { Ta : [], ta : [], tw : [] };
         var dT, T;
 
-        /*dT=2.5;
+        /*
+        dT=2.5;
         for(T=40; T<=90; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(5);   }
         dT=3;
         for(T=93; T<=120; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(5);  }
@@ -67,13 +68,17 @@ var Anneal = {
         dT=6;
         for(T=206; T<=260; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(7);  }
         dT=8;
-        for(T=268; T<=300; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(8);  }*/
+        for(T=268; T<=300; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(8);  }
+        dT=10;
+        for(T=310; T<=400; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(10);  }
+        dT=15;
+        for(T=415; T<=520; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(20);  }
+        */
+        dT=15;
+        for(T=445; T<=520; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(20);  }
         dT=20;
-        for(T=680; T>=540; T-=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(30);  }
-		dT=15;
-        for(T=525; T>=420; T-=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(20);  }
-		dT=10;
-        for(T=410; T>=300; T-=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(10);  }
+        for(T=540; T<=700; T+=dT) { obj.Ta.push(T); obj.ta.push(dT); obj.tw.push(30);  }
+
         return obj;
     },
     doProgram : function() {
