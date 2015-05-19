@@ -7,6 +7,7 @@ var Delta = {
             R2.offset=-r
         }
     },
+
     getR15offset : function() {
         return -1*dev.nvm.R1.offset;
     },
@@ -18,6 +19,7 @@ var Delta = {
             R2.multiplier=1/(1-alpha)
         }
     },
+
     getRratio : function() {
         var a = dev.nvm.R1.multiplier;
         a = 2/a-1;

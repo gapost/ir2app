@@ -355,15 +355,16 @@ var TempCtrl = {
         {
             setTitle("Cryostat Control")
 
-            ui = widget();
+            var ui = widget();
 
             // Run/Stop
-            runButton = ui.findChild("Run");
+            var runButton = ui.findChild("Run");
             runButton.toggled.connect(this.start);
 
             // 1st tab
             bind(dev.dmm1.ch3.T,ui.findChild("T"));
-            bind(dev.tc,"setPoint",ui.findChild("setPoint"));
+            var btn = ui.findChild("setPoint");
+            btn['valueChanged(double)'].connect(TempCtrl.setCryoTs);
             bind(dev.tc,"autoMode",ui.findChild("autoMode"));
             bind(dev.plp.W,ui.findChild("W"));
             bind(dev.tc,"power",ui.findChild("setW"));
@@ -390,24 +391,24 @@ var TempCtrl = {
         {
             setTitle("Sample T Control")
 
-            ui = widget();
+            var ui = widget();
 
             // Run/Stop
             //btn = ui.findChild("Run");
             //btn.toggled.connect(startSampleCtrl);
 
             // select input
-            btn = ui.findChild("selectTCinput");
-            btn.toggled.connect(this.selectTCinput);
+            var btn = ui.findChild("selectTCinput");
+            btn.toggled.connect(TempCtrl.selectTCinput);
 
 
             // 1st tab
             bind(dev.dmm1.T1,ui.findChild("T1"));
             bind(dev.dmm1.T2,ui.findChild("T2"));
             btn = ui.findChild("setPoint");
-            btn['valueChanged(double)'].connect(this.setSampleTs);
+            btn['valueChanged(double)'].connect(TempCtrl.setSampleTs);
             btn = ui.findChild("autoMode");
-            btn.toggled.connect(this.setSampleAuto);
+            btn.toggled.connect(TempCtrl.setSampleAuto);
             bind(dev.cpx1.W,ui.findChild("W1"));
             bind(dev.cpx2.W,ui.findChild("W2"));
 
@@ -712,6 +713,10 @@ var TempCtrl = {
 			Td = 19;
 			Tr = 38;
 		}
+        dev.tc.gain = g;
+        dev.tc.Ti = Ti;
+        dev.tc.Td = Td;
+        dev.tc.Tr = Tr;
 	}
 }
 
