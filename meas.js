@@ -5,7 +5,7 @@ var Meas = {
         60,66,72,80,90,100,110,120,130,140,150,160,170,180,190,
         200,215,230,250,270,290,310,13],
 
-        cycle : function (Ta) {
+    cycle : function (Ta) {
         Core.startRecording();
         data.rt.clear();
 

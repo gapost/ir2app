@@ -26,6 +26,7 @@ Core.setBufferCap();
 
 // populate channels
 TempCtrl.showChannels(1);
+Delta.showChannels(1);
 RateMonitors.showChannels(1);
 Aux.showChannels(1);
 
