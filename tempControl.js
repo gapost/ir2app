@@ -526,6 +526,9 @@ var TempCtrl = {
     setCryoTs : function(Ts) {
 		TempCtrl.setCryoPIDparameters(Ts);
         dev.tc.setPoint = Ts;
+        var ui=figs.cryoCtrl.widget();
+        var btn = ui.findChild("setPoint");
+        btn.value = Ts;
     },
 	
     setSampleTs : function(Ts) {

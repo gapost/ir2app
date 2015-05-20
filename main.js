@@ -4,7 +4,7 @@ var tcpTimeout = 1000;
 var Rheater1 = 0.087; // Ohm
 var Rheater2 = 0.076; // Ohm
 var alpha = 7/100; // deviation (R12-R23)/R13
-var R15 = 9.499; // Resistance at 15K
+var R15 = 0.03; // Resistance at 15K
 var Is = 0.1; // sample current = 20mA
 
 data.sampleName = "pure Fe, hand cut, electropolished, annealed 800C, 12h";
